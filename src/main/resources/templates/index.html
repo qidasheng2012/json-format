@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json-format</title>
+</head>
+<body>
+<div style="height: auto;width: 100%;border: 0px solid gray; margin: 0 auto; overflow: hidden">
+    <div id="left" style="text-align: left;">
+        <div style="padding-top: 10px">格式化前数据</div>
+        <div style="padding-top: 10px">
+            <textarea id="left_text" rows="10" cols="180"></textarea>
+        </div>
+    </div>
+
+    <div id="middle" style="text-align: left;padding-top: 10px">
+        <button onclick="format()" style="background-color: #6495ED;width: 80px;height: 40px">
+            <font style="front-family:微软雅黑,宋体;front-size:lem;color: #FFFFFF">
+                <b>格式化</b>
+            </font>
+        </button>
+    </div>
+
+    <div id="right" style="text-align: left;">
+        <div style="padding-top: 10px">格式化后数据</div>
+        <div style="padding-top: 10px">
+            <textarea id="right_text" rows="60" cols="180"></textarea>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script src="./js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript">
+    function format() {
+        var jsonStr = $("#left_text").val();
+
+        if (jsonStr == "") {
+            alert("请输入要格式化的json字符串")
+            return
+        }
+
+        $.ajax({
+            type:"POST",
+            url:"/json/format",
+            datatype: "json",
+            data: jsonStr,
+            contentType:"text/plain;charset=UTF-8",
+            success: function (data) {
+                $("#right_text").val(data)
+            },
+            error:function () {
+                alert("要格式化的json字符串格式错误！")
+            }
+        });
+    }
+</script>
+</html>
